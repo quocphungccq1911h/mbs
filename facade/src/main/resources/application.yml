@@ -12,3 +12,8 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.ecommerce.model
+jwt:
+  secret: ${JWT_SECRET}
+  master-key: ${MASTER_KEY:}
+  access-exp-ms: ${ACCESS_TOKEN_EXP_MS:900000}
+  refresh-exp-ms: ${REFRESH_TOKEN_EXP_MS:604800000}
