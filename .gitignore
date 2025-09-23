@@ -45,3 +45,5 @@ application-*.properties
 # comment this if you want to push generated mappers & models
 **/mapper/*.xml
 **/model/**/*.java
+**/repository/mapper/*.java
+**/mybatis-generator-config.xml

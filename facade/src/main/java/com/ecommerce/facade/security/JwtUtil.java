@@ -137,4 +137,12 @@ public class JwtUtil {
         return parseToken(refreshToken).getBody().getId();
     }
 
+    public long getAccessExpMs() {
+        return accessExpMs;
+    }
+
+    public long getRefreshExpMs() {
+        return refreshExpMs;
+    }
+
 }
