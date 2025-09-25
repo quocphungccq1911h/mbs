@@ -22,7 +22,6 @@ public class UserController {
 
     @PostMapping
     public UserResponse createUser(@RequestBody CreateUserRequest request) {
-        System.out.println("🔥 createUser called with: " + request);
         return userService.createUser(request);
     }
 
@@ -35,5 +34,12 @@ public class UserController {
     public UserResponse getUser(@PathVariable Long id) {
         return userService.getUser(id);
     }
+
+    @GetMapping("/ping")
+    public String ping() {
+        System.out.println("🔥 Ping called");
+        return "pong";
+    }
+
 
 }
