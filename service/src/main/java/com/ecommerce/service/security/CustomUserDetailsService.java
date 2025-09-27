@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         // Trả về đối tượng UserDetails cho Spring Security
         return User.builder()
                 .username(user.getUsername())
-                .password(user.getPassword())
+                .password(user.getUserPassword())
                 .roles("USER")
                 .build();
     }
