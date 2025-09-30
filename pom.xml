@@ -24,5 +24,6 @@
         <module>service</module>
         <module>facade</module>
         <module>jobs</module>
+        <module>logging</module>
     </modules>
 </project>
