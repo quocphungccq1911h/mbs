@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication(scanBasePackages = "com.ecommerce")
 @MapperScan("com.ecommerce.repository.mapper")
-@MapperScan("com.ecommerce.service.mapper")
 public class FacadeApplication {
     public static void main(String[] args) {
         SpringApplication.run(FacadeApplication.class, args);

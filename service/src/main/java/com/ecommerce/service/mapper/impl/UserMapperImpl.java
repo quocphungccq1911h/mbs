@@ -7,8 +7,10 @@ import com.ecommerce.service.dto.response.UserResponse;
 import com.ecommerce.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
+@Component
 public class UserMapperImpl implements UserMapper {
 
     private final PasswordEncoder passwordEncoder;
