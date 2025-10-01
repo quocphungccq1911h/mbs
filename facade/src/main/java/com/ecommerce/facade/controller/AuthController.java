@@ -44,7 +44,7 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword())
         );
 
-        UserDetails user = (UserDetails) auth.getDetails();
+        UserDetails user = (UserDetails) auth.getPrincipal();
         String role = user.getAuthorities()
                 .stream()
                 .findFirst()
@@ -70,7 +70,8 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refresh(@CookieValue(name = "refresh_token", required = false) String refreshToken) {
+    public ResponseEntity<?> refresh(@CookieValue(name = "refresh_token", required = false) String refreshToken,
+                                     @RequestHeader(value = "User-Agent", required = false) String ua) {
         if (refreshToken == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No refresh token");
 
         try {
@@ -89,7 +90,7 @@ public class AuthController {
             // Optionally rotate refresh token:
             // revoke old jti, create new jti, insert, generate new refresh JWT, set cookie
             refreshTokenService.revoke(jti);
-            String newJti = refreshTokenService.createRefreshTokenRecord(username, jwtUtil.getRefreshExpMs(), null, null);
+            String newJti = refreshTokenService.createRefreshTokenRecord(username, jwtUtil.getRefreshExpMs(), ua, null);
             String newRefreshToken = jwtUtil.generateRefreshToken(username, newJti);
 
             ResponseCookie cookie = ResponseCookie.from("refresh_token", newRefreshToken)

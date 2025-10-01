@@ -3,10 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ecommerce.repository.mapper.ext.UserDOExtMapper">
-    <select id="selectByUsername" parameterType="string" resultType="BaseResultMap">
+    <select id="selectByUsername" parameterType="string"
+            resultMap="com.ecommerce.repository.mapper.UsersDOMapper.BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
-        from users
+        <include refid="com.ecommerce.repository.mapper.UsersDOMapper.Base_Column_List"/>
+        from ecommerce_users
         where username= #{username}
         limit 1
     </select>
