@@ -5,18 +5,26 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
+@Component
 public class JwtUtil {
     private final Key signingKey;
     private final long accessExpMs;
     private final long refreshExpMs;
-    public JwtUtil(String secret, long accessExpMs, long refreshExpMs) {
+
+    public JwtUtil(@Value("${jwt.secret}") String secret,
+                   @Value("${jwt.access-exp-ms:900000}") long accessExpMs,
+                   @Value("${jwt.refresh-exp-ms:604800000}") long refreshExpMs) {
         this.signingKey = Keys.hmacShaKeyFor(secret.getBytes());
         this.accessExpMs = accessExpMs;
         this.refreshExpMs = refreshExpMs;
@@ -121,6 +129,28 @@ public class JwtUtil {
 
     public long getRefreshExpMs() {
         return refreshExpMs;
+    }
+
+    public List<String> extractRoles(String token) {
+        Claims claims = this.extractAllClaims(token);
+        Object rolesObject = claims.get("role");
+
+        if (rolesObject instanceof List<?> list) {
+            return list.stream().map(Object::toString).toList();
+        } else if (rolesObject instanceof String singleRole) {
+            return List.of(singleRole);
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
 }
