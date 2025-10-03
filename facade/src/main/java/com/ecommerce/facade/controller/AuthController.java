@@ -1,7 +1,8 @@
 package com.ecommerce.facade.controller;
 
+import com.ecommerce.common.security.JwtUtil;
 import com.ecommerce.dto.request.LoginRequest;
-import com.ecommerce.facade.security.JwtUtil;
+import com.ecommerce.facade.security.JwtConfig;
 import com.ecommerce.facade.service.RefreshTokenService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

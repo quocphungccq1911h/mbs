@@ -1,7 +1,7 @@
 package com.ecommerce.facade.config;
 
+import com.ecommerce.common.security.JwtUtil;
 import com.ecommerce.facade.security.JwtAuthenticationFilter;
-import com.ecommerce.facade.security.JwtUtil;
 import com.ecommerce.service.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

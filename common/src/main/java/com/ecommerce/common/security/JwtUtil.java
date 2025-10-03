@@ -5,9 +5,6 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -15,33 +12,14 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
-@Component
 public class JwtUtil {
-    @Value("${jwt.secret}")
-    private String jwtSecretRaw;
-
-    @Value("${jwt.master-key:}")
-    private String masterKey; // optional: nếu jwtSecretRaw đang được mã hóa
-
-    @Value("${jwt.access-exp-ms:900000}")
-    private long accessExpMs;
-
-    @Value("${jwt.refresh-exp-ms:604800000}")
-    private long refreshExpMs;
-
-    private Key signingKey;
-
-    @PostConstruct
-    public void init() {
-        String secret = jwtSecretRaw;
-
-        if (masterKey != null && !masterKey.isBlank() && isEncrypted(secret)) {
-            secret = decryptSecret(secret, masterKey);
-        }
-
-        // ensure bytes length sufficient for HS256/HS512: prefer base64 key or long random
-        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-        signingKey = Keys.hmacShaKeyFor(keyBytes);
+    private final Key signingKey;
+    private final long accessExpMs;
+    private final long refreshExpMs;
+    public JwtUtil(String secret, long accessExpMs, long refreshExpMs) {
+        this.signingKey = Keys.hmacShaKeyFor(secret.getBytes());
+        this.accessExpMs = accessExpMs;
+        this.refreshExpMs = refreshExpMs;
     }
 
     /**
