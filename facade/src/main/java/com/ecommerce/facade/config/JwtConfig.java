@@ -1,4 +1,4 @@
-package com.ecommerce.facade.security;
+package com.ecommerce.facade.config;
 
 import com.ecommerce.common.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Value;
