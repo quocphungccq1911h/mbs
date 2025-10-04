@@ -52,7 +52,7 @@ public class RefreshTokenService {
 
         if (!userName.equals(token.getUsername())) return false;
         if (token.getRevoked() != null && token.getRevoked()) return false;
-        if (token.getExpiresAt() != null || token.getExpiresAt().before(new Date())) return false;
+        if (token.getExpiresAt() == null || token.getExpiresAt().before(new Date())) return false;
         return true;
     }
 

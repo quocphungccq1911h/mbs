@@ -1,7 +1,8 @@
 package com.ecommerce.facade.config;
 
-import com.ecommerce.facade.security.JwtAuthenticationFilter;
-import com.ecommerce.facade.security.JwtUtil;
+import com.ecommerce.common.security.JwtAuthenticationFilter;
+import com.ecommerce.common.security.JwtUtil;
+
 import com.ecommerce.service.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,7 +57,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> {}) // 👈 bật cors
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/api/users", "/api/users/ping", "/swagger-ui/**", "/v3/api-docs/**")
+                        //.requestMatchers("/auth/**", "/api/users/**", "/api/users/ping", "/swagger-ui/**", "/v3/api-docs/**")
+                        .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 )

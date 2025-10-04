@@ -10,4 +10,6 @@ public interface UserService {
     UserResponse updateUser(Long userId, UpdateUserRequest request);
 
     UserResponse getUser(Long userId);
+
+    Boolean deleteUserById(Long userId);
 }
